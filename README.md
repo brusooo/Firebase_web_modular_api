@@ -5,12 +5,14 @@
 
 Firebase Realtime Database ( Web modular API) in Next.js 13! 🌟 A simple Todo app, no frontend hassle – just a seamless API experience. Easy, breezy, and perfect for your tasks! 📝
 
+🔥 Fork this repository, 🔑 Add your own Firebase credentials, and explore the API through Swagger at the endpoint /api/docs! 🚀
+
 ## Usage Overview: ✨
 
 - **Database:** Firebase Realtime Database 📊
 - **Framework:** Next.js 13 🌐
 - **Application Type:** Simple Todo Tasks 📝
-- **Frontend:** None! Just a robust API setup 🚫
+- **Frontend:** None! Just a robust API setup with swagger 🚫
 - **Configuration:** Effortlessly set up with intuitive rewrites and configurations! 🛠️
 
 ## API Endpoints

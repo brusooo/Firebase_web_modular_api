@@ -1,0 +1,403 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Next Swagger API Example",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/addUser": {
+      "post": {
+        "tags": ["POST"],
+        "description": "Adds a new user to the database",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/addUser"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully added user to the database",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/addUserSuccessResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/addTask": {
+      "post": {
+        "tags": ["POST"],
+        "description": "Add a task to the tasks list",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/addTask"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully added task to the database👍",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/removeTaskSuccessResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/removeTask": {
+      "delete": {
+        "tags": ["DELETE"],
+        "description": "Remove tasks from the task list",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/removeTask"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully removed Task from the database👍",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/addTaskSuccessResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/moveTask": {
+      "put": {
+        "tags": ["PUT"],
+        "description": "Move tasks from one list to another",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/moveTask"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully move Task in the database👍",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/moveTaskSuccessResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/updateTaskDesc": {
+      "put": {
+        "tags": ["PUT"],
+        "description": "Update task details like description",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateTask"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Task with taskId ${taskId} updated successfully👍",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/updateTaskSuccessResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/getDocs": {
+      "post": {
+        "tags": ["GET"],
+        "description": "Retrieve details from database",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/getDocs"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Retrive successfully👍",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getDocSuccessResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "addUser": {
+        "type": "object",
+        "properties": {
+          "userName": {
+            "type": "string"
+          },
+          "tasks": {
+            "type": "object",
+            "default": {
+              "completed": [{ "task": "Has to be removed from DB" }],
+              "inProgress": [{ "task": "Has to be removed from DB" }]
+            },
+            "properties": {
+              "completed": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "taskName": { "type": "string" }
+                  }
+                }
+              },
+              "inProgress": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "taskName": { "type": "string" }
+                  }
+                }
+              }
+            },
+            "required": ["completed", "inProgress"]
+          }
+        },
+        "required": ["userName", "tasks"]
+      },
+      "addTask": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "default": 0,
+            "type": "string"
+          },
+          "newTask": {
+            "default": "Sample Task Name",
+            "type": "string"
+          }
+        },
+        "required": ["userId"]
+      },
+      "removeTask": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "default": "123",
+            "type": "string"
+          },
+          "taskId": {
+            "default": "123",
+            "type": "string"
+          },
+          "taskIn": {
+            "default": "inProgress",
+            "type": "string"
+          }
+        },
+        "required": ["userId", "taskId", "taskIn"]
+      },
+      "moveTask": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "default": "123",
+            "type": "string"
+          },
+          "taskId": {
+            "default": "123",
+            "type": "string"
+          },
+          "source": {
+            "default": "inProgress",
+            "type": "string"
+          },
+          "destination": {
+            "default": "completed",
+            "type": "string"
+          }
+        },
+        "required": ["userId", "taskId", "source", "destination"]
+      },
+      "updateTask": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "default": "123",
+            "type": "string"
+          },
+          "taskId": {
+            "default": "123",
+            "type": "string"
+          },
+          "source": {
+            "default": "inProgress",
+            "type": "string"
+          },
+          "newDescription": {
+            "default": "new Description",
+            "type": "string"
+          }
+        },
+        "required": ["userId", "taskId", "source", "destination"]
+      },
+      "getDocs": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "default": "123",
+            "type": "string"
+          },
+          "source": {
+            "default": "user | inProgress | completed",
+            "type": "string"
+          }
+        },
+        "required": ["userId", "source"]
+      },
+      "addUserSuccessResponse": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string",
+            "default": "Successfully Added User to firebase👍"
+          }
+        }
+      },
+      "addTaskSuccessResponse": {
+        "type": "object",
+        "properties": {
+          "taskId": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string",
+            "default": "Task added to completed tasks successfully👍"
+          }
+        }
+      },
+      "removeTaskSuccessResponse": {
+        "type": "object",
+        "properties": {
+          "taskId": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string",
+            "default": "Task with taskId ${taskId} deleted successfully👍"
+          }
+        }
+      },
+      "moveTaskSuccessResponse": {
+        "type": "object",
+        "properties": {
+          "taskId": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string",
+            "default": "Task with taskId ${taskId} moved from source to destination successfully👍"
+          }
+        }
+      },
+      "updateTaskSuccessResponse": {
+        "type": "object",
+        "properties": {
+          "taskId": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string",
+            "default": "Task with taskId ${taskId} updated successfully👍"
+          }
+        }
+      },
+      "getDocSuccessResponse": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "userName": {
+                "type": "string"
+              },
+              "tasks": {
+                "type": "object",
+                "default": {
+                  "completed": [{ "task": "Fetched from DB" }],
+                  "inProgress": [{ "task": "Fetched from DB" }]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "GET",
+      "description": "GET Operations"
+    },
+    {
+      "name": "POST",
+      "description": "POST Operations"
+    },
+    {
+      "name": "PUT",
+      "description": "PUT Operations"
+    },
+    {
+      "name": "DELETE",
+      "description": "DELETE Operations"
+    }
+  ]
+}
